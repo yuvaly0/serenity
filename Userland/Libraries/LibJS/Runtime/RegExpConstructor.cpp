@@ -13,7 +13,7 @@
 namespace JS {
 
 RegExpConstructor::RegExpConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.RegExp.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.RegExp.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 

@@ -309,7 +309,7 @@ ThrowCompletionOr<DurationUnitOptions> get_duration_unit_options(VM& vm, String 
             }
         }
     } else {
-        style = style_value.as_string().utf8_string_view();
+        style = style_value.as_deprecated_string().utf8_string_view();
     }
 
     // 4. Let displayField be the string-concatenation of unit and "Display".
@@ -333,7 +333,7 @@ ThrowCompletionOr<DurationUnitOptions> get_duration_unit_options(VM& vm, String 
     }
 
     // 7. Return the Record { [[Style]]: style, [[Display]]: display }.
-    return DurationUnitOptions { .style = MUST(String::from_utf8(style)), .display = display.as_string().utf8_string() };
+    return DurationUnitOptions { .style = MUST(String::from_utf8(style)), .display = display.as_deprecated_string().utf8_string() };
 }
 
 // 1.1.7 PartitionDurationFormatPattern ( durationFormat, duration ), https://tc39.es/proposal-intl-duration-format/#sec-partitiondurationformatpattern

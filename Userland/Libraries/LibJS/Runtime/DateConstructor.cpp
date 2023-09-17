@@ -181,7 +181,7 @@ static double parse_date_string(DeprecatedString const& date_string)
 }
 
 DateConstructor::DateConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.Date.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.Date.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 
@@ -246,7 +246,7 @@ ThrowCompletionOr<NonnullGCPtr<Object>> DateConstructor::construct(FunctionObjec
             if (primitive.is_string()) {
                 // 1. Assert: The next step never returns an abrupt completion because Type(v) is String.
                 // 2. Let tv be the result of parsing v as a date, in exactly the same manner as for the parse method (21.4.3.2).
-                time_value = parse_date_string(primitive.as_string().deprecated_string());
+                time_value = parse_date_string(primitive.as_deprecated_string().deprecated_string());
             }
             // iii. Else,
             else {

@@ -1549,7 +1549,7 @@ ErrorOr<void> StyleComputer::compute_cascaded_values(StyleProperties& style, DOM
         if (animation_name.is_null())
             return OptionalNone {};
         if (animation_name->is_string())
-            return animation_name->as_string().string_value();
+            return animation_name->as_deprecated_string().string_value();
         return animation_name->to_string();
     };
     if (auto animation_name = get_animation_name(); animation_name.has_value()) {
@@ -2135,7 +2135,7 @@ RefPtr<Gfx::Font const> StyleComputer::compute_font_for_style_values(DOM::Elemen
             if (family->is_identifier()) {
                 found_font = find_generic_font(family->to_identifier());
             } else if (family->is_string()) {
-                found_font = find_font(family->as_string().string_value());
+                found_font = find_font(family->as_deprecated_string().string_value());
             }
             if (found_font)
                 break;
@@ -2143,7 +2143,7 @@ RefPtr<Gfx::Font const> StyleComputer::compute_font_for_style_values(DOM::Elemen
     } else if (font_family.is_identifier()) {
         found_font = find_generic_font(font_family.to_identifier());
     } else if (font_family.is_string()) {
-        found_font = find_font(font_family.as_string().string_value());
+        found_font = find_font(font_family.as_deprecated_string().string_value());
     }
 
     if (!found_font) {

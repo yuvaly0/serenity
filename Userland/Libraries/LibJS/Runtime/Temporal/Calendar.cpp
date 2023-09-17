@@ -131,7 +131,7 @@ ThrowCompletionOr<Vector<String>> calendar_fields(VM& vm, Object& calendar, Vect
     Vector<String> result;
     TRY_OR_THROW_OOM(vm, result.try_ensure_capacity(list.size()));
     for (auto& value : list)
-        result.unchecked_append(value.as_string().utf8_string());
+        result.unchecked_append(value.as_deprecated_string().utf8_string());
     return result;
 }
 
@@ -212,10 +212,10 @@ ThrowCompletionOr<double> calendar_year(VM& vm, Object& calendar, Object& date_l
 
     // 2. If result is undefined, throw a RangeError exception.
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.year.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.year.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 3. Return ? ToIntegerWithTruncation(result).
-    return TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.year.as_string(), vm.names.Infinity.as_string()));
+    return TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.year.as_deprecated_string(), vm.names.Infinity.as_deprecated_string()));
 }
 
 // 12.2.9 CalendarMonth ( calendar, dateLike ), https://tc39.es/proposal-temporal/#sec-temporal-calendarmonth
@@ -226,7 +226,7 @@ ThrowCompletionOr<double> calendar_month(VM& vm, Object& calendar, Object& date_
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.month.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.month.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -240,7 +240,7 @@ ThrowCompletionOr<String> calendar_month_code(VM& vm, Object& calendar, Object& 
 
     // 2. If result is undefined, throw a RangeError exception.
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.monthCode.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.monthCode.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 3. Return ? ToString(result).
     return result.to_string(vm);
@@ -254,7 +254,7 @@ ThrowCompletionOr<double> calendar_day(VM& vm, Object& calendar, Object& date_li
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.day.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.day.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -268,7 +268,7 @@ ThrowCompletionOr<double> calendar_day_of_week(VM& vm, Object& calendar, Object&
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.dayOfWeek.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.dayOfWeek.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -282,7 +282,7 @@ ThrowCompletionOr<double> calendar_day_of_year(VM& vm, Object& calendar, Object&
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.dayOfYear.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.dayOfYear.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -296,7 +296,7 @@ ThrowCompletionOr<double> calendar_week_of_year(VM& vm, Object& calendar, Object
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.weekOfYear.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.weekOfYear.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -310,10 +310,10 @@ ThrowCompletionOr<double> calendar_year_of_week(VM& vm, Object& calendar, Object
 
     // 2. If result is undefined, throw a RangeError exception.
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.yearOfWeek.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.yearOfWeek.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 3. Return ? ToIntegerWithTruncation(result).
-    return TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.yearOfWeek.as_string(), vm.names.Infinity.to_string()));
+    return TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.yearOfWeek.as_deprecated_string(), vm.names.Infinity.to_string()));
 }
 
 // 12.2.16 CalendarDaysInWeek ( calendar, dateLike ), https://tc39.es/proposal-temporal/#sec-temporal-calendardaysinweek
@@ -324,7 +324,7 @@ ThrowCompletionOr<double> calendar_days_in_week(VM& vm, Object& calendar, Object
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInWeek.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInWeek.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -338,7 +338,7 @@ ThrowCompletionOr<double> calendar_days_in_month(VM& vm, Object& calendar, Objec
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInMonth.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInMonth.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -352,7 +352,7 @@ ThrowCompletionOr<double> calendar_days_in_year(VM& vm, Object& calendar, Object
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInYear.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.daysInYear.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -366,7 +366,7 @@ ThrowCompletionOr<double> calendar_months_in_year(VM& vm, Object& calendar, Obje
 
     // NOTE: Explicitly handled for a better error message similar to the other calendar property AOs
     if (result.is_undefined())
-        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.monthsInYear.as_string(), vm.names.undefined.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.monthsInYear.as_deprecated_string(), vm.names.undefined.as_deprecated_string());
 
     // 2. Return ? ToPositiveIntegerWithTruncation(result).
     return TRY(to_positive_integer_with_truncation(vm, result));
@@ -408,7 +408,7 @@ ThrowCompletionOr<Value> calendar_era_year(VM& vm, Object& calendar, Object& dat
 
     // 3. If result is not undefined, set result to ? ToIntegerWithTruncation(result).
     if (!result.is_undefined())
-        result = Value(TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.eraYear.as_string(), "Infinity"sv)));
+        result = Value(TRY(to_integer_with_truncation(vm, result, ErrorType::TemporalInvalidCalendarFunctionResult, vm.names.eraYear.as_deprecated_string(), "Infinity"sv)));
 
     // 4. Return result.
     return result;
@@ -776,7 +776,7 @@ ThrowCompletionOr<double> resolve_iso_month(VM& vm, Object const& fields)
     if (month_code.is_undefined()) {
         // a. If month is undefined, throw a TypeError exception.
         if (month.is_undefined())
-            return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.month.as_string());
+            return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.month.as_deprecated_string());
 
         // b. Return ℝ(month).
         return month.as_double();
@@ -784,7 +784,7 @@ ThrowCompletionOr<double> resolve_iso_month(VM& vm, Object const& fields)
 
     // 6. Assert: Type(monthCode) is String.
     VERIFY(month_code.is_string());
-    auto month_code_string = month_code.as_string().deprecated_string();
+    auto month_code_string = month_code.as_deprecated_string().deprecated_string();
 
     // 7. If the length of monthCode is not 3, throw a RangeError exception.
     auto month_length = month_code_string.length();
@@ -960,7 +960,7 @@ ThrowCompletionOr<Object*> default_merge_calendar_fields(VM& vm, Object const& f
     // 3. For each element key of fieldsKeys, do
     for (auto& key : fields_keys) {
         // a. If key is not "month" or "monthCode", then
-        if (!key.as_string().deprecated_string().is_one_of(vm.names.month.as_string(), vm.names.monthCode.as_string())) {
+        if (!key.as_deprecated_string().deprecated_string().is_one_of(vm.names.month.as_deprecated_string(), vm.names.monthCode.as_deprecated_string())) {
             auto property_key = MUST(PropertyKey::from_value(vm, key));
 
             // i. Let propValue be ? Get(fields, key).
@@ -994,7 +994,7 @@ ThrowCompletionOr<Object*> default_merge_calendar_fields(VM& vm, Object const& f
         }
 
         // See comment above.
-        additional_fields_keys_contains_month_or_month_code_property |= key.as_string().deprecated_string() == vm.names.month.as_string() || key.as_string().deprecated_string() == vm.names.monthCode.as_string();
+        additional_fields_keys_contains_month_or_month_code_property |= key.as_deprecated_string().deprecated_string() == vm.names.month.as_deprecated_string() || key.as_deprecated_string().deprecated_string() == vm.names.monthCode.as_deprecated_string();
     }
 
     // 6. If additionalFieldsKeys does not contain either "month" or "monthCode", then

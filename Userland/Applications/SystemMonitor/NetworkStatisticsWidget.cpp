@@ -75,7 +75,7 @@ NetworkStatisticsWidget::NetworkStatisticsWidget()
         m_adapter_context_menu->add_action(GUI::Action::create(
             "Open in Network Settings...", MUST(Gfx::Bitmap::load_from_file("/res/icons/16x16/network.png"sv)), [this](GUI::Action&) {
                 m_adapter_table_view->selection().for_each_index([this](GUI::ModelIndex const& index) {
-                    auto adapter_name = index.sibling_at_column(1).data().as_string();
+                    auto adapter_name = index.sibling_at_column(1).data().as_deprecated_string();
                     GUI::Process::spawn_or_show_error(window(), "/bin/NetworkSettings"sv, Array { adapter_name.characters() });
                 });
             },
@@ -84,7 +84,7 @@ NetworkStatisticsWidget::NetworkStatisticsWidget()
             if (!index.is_valid()) {
                 return;
             }
-            auto adapter_name = index.sibling_at_column(1).data().as_string();
+            auto adapter_name = index.sibling_at_column(1).data().as_deprecated_string();
             if (adapter_name == "loop") {
                 return;
             }

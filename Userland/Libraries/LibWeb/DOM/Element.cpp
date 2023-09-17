@@ -1703,7 +1703,7 @@ void Element::enqueue_a_custom_element_callback_reaction(FlyString const& callba
         VERIFY(!arguments.is_empty());
         auto& attribute_name_value = arguments.first();
         VERIFY(attribute_name_value.is_string());
-        auto attribute_name = attribute_name_value.as_string().utf8_string();
+        auto attribute_name = attribute_name_value.as_deprecated_string().utf8_string();
 
         // 2. If definition's observed attributes does not contain attributeName, then return.
         if (!definition->observed_attributes().contains_slow(attribute_name))

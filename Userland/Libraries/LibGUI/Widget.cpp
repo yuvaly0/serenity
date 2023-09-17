@@ -118,19 +118,19 @@ Widget::Widget()
         [this](auto& value) {
             if (!value.is_string())
                 return false;
-            if (value.as_string() == "ClickFocus") {
+            if (value.as_deprecated_string() == "ClickFocus") {
                 set_focus_policy(GUI::FocusPolicy::ClickFocus);
                 return true;
             }
-            if (value.as_string() == "NoFocus") {
+            if (value.as_deprecated_string() == "NoFocus") {
                 set_focus_policy(GUI::FocusPolicy::NoFocus);
                 return true;
             }
-            if (value.as_string() == "TabFocus") {
+            if (value.as_deprecated_string() == "TabFocus") {
                 set_focus_policy(GUI::FocusPolicy::TabFocus);
                 return true;
             }
-            if (value.as_string() == "StrongFocus") {
+            if (value.as_deprecated_string() == "StrongFocus") {
                 set_focus_policy(GUI::FocusPolicy::StrongFocus);
                 return true;
             }
@@ -168,7 +168,7 @@ Widget::Widget()
         [this](auto& value) {
             if (!value.is_string())
                 return false;
-            auto str = value.as_string();
+            auto str = value.as_deprecated_string();
             if (str == "NoRole") {
                 set_foreground_role(Gfx::ColorRole::NoRole);
                 return true;
@@ -190,7 +190,7 @@ Widget::Widget()
         [this](auto& value) {
             if (!value.is_string())
                 return false;
-            auto str = value.as_string();
+            auto str = value.as_deprecated_string();
             if (str == "NoRole") {
                 set_background_role(Gfx::ColorRole::NoRole);
                 return true;

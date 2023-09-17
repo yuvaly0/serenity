@@ -771,7 +771,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
                 for (auto const& descriptor : shape.property_table()) {
                     if (!descriptor.key.is_string())
                         continue;
-                    auto key = descriptor.key.as_string();
+                    auto key = descriptor.key.as_deprecated_string();
                     if (key.view().starts_with(property_pattern)) {
                         Line::CompletionSuggestion completion { key, Line::CompletionSuggestion::ForSearch };
                         if (!results.contains_slow(completion)) { // hide duplicates

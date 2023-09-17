@@ -423,7 +423,7 @@ ErrorOr<NonnullOwnPtr<Profile>> Profile::load_from_perfcore_file(StringView path
                 .duration = Duration::from_nanoseconds(perf_event.get_integer<u64>("durationNs"sv).value_or(0)),
                 .data = Event::OpenEventData {},
             };
-            auto const filesystem_event_type = perf_event.get("fs_event_type"sv).value_or("").as_string();
+            auto const filesystem_event_type = perf_event.get("fs_event_type"sv).value_or("").as_deprecated_string();
             if (filesystem_event_type == "open"sv) {
                 auto const string_index = perf_event.get_addr("filename_index"sv).value_or(0);
                 auto const filename = profile_strings.get(string_index).value_or("").view();

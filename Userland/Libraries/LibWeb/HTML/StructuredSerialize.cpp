@@ -136,7 +136,7 @@ public:
             TRY(serialize_string(m_serialized, TRY_OR_THROW_OOM(m_vm, val.to_string())));
         } else if (value.is_string()) {
             m_serialized.append(ValueTag::StringPrimitive);
-            TRY(serialize_string(m_serialized, value.as_string()));
+            TRY(serialize_string(m_serialized, value.as_deprecated_string()));
         } else {
             return_primitive_type = false;
         }

@@ -17,7 +17,7 @@ namespace JS::Intl {
 
 // 18.1 The Intl.Segmenter Constructor, https://tc39.es/ecma402/#sec-intl-segmenter-constructor
 SegmenterConstructor::SegmenterConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.Segmenter.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.Segmenter.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 
@@ -81,7 +81,7 @@ ThrowCompletionOr<NonnullGCPtr<Object>> SegmenterConstructor::construct(Function
     auto granularity = TRY(get_option(vm, *options, vm.names.granularity, OptionType::String, { "grapheme"sv, "word"sv, "sentence"sv }, "grapheme"sv));
 
     // 13. Set segmenter.[[SegmenterGranularity]] to granularity.
-    segmenter->set_segmenter_granularity(granularity.as_string().utf8_string_view());
+    segmenter->set_segmenter_granularity(granularity.as_deprecated_string().utf8_string_view());
 
     // 14. Return segmenter.
     return segmenter;

@@ -372,7 +372,7 @@ void HexEditorWidget::update_inspector_values(size_t position)
     if (valid_bytes == 0)
         value_inspector_model->set_parsed_value(ValueInspectorModel::ValueType::UTF8, ""_string);
     else {
-        auto utf8 = String::from_utf8(utf8_view.unicode_substring_view(0, 1).as_string());
+        auto utf8 = String::from_utf8(utf8_view.unicode_substring_view(0, 1).as_deprecated_string());
         value_inspector_model->set_parsed_value(ValueInspectorModel::ValueType::UTF8, move(utf8));
     }
 
@@ -399,7 +399,7 @@ void HexEditorWidget::update_inspector_values(size_t position)
         value_inspector_model->set_parsed_value(ValueInspectorModel::ValueType::UTF8String, ""_string);
     else
         // FIXME: replace control chars with something else - we don't want line breaks here ;)
-        value_inspector_model->set_parsed_value(ValueInspectorModel::ValueType::UTF8String, String::from_utf8(utf8_string_view.as_string()));
+        value_inspector_model->set_parsed_value(ValueInspectorModel::ValueType::UTF8String, String::from_utf8(utf8_string_view.as_deprecated_string()));
 
     // FIXME: Parse as other values like Timestamp etc
 

@@ -658,7 +658,7 @@ static Optional<NumberParseResult> parse_number_text(StringView text)
 double string_to_number(StringView string)
 {
     // 1. Let text be StringToCodePoints(str).
-    DeprecatedString text = Utf8View(string).trim(whitespace_characters, AK::TrimMode::Both).as_string();
+    DeprecatedString text = Utf8View(string).trim(whitespace_characters, AK::TrimMode::Both).as_deprecated_string();
 
     // 2. Let literal be ParseText(text, StringNumericLiteral).
     if (text.is_empty())
@@ -767,7 +767,7 @@ ThrowCompletionOr<NonnullGCPtr<BigInt>> Value::to_bigint(VM& vm) const
         return primitive.as_bigint();
     case STRING_TAG: {
         // 1. Let n be ! StringToBigInt(prim).
-        auto bigint = string_to_bigint(vm, primitive.as_string().deprecated_string());
+        auto bigint = string_to_bigint(vm, primitive.as_deprecated_string().deprecated_string());
 
         // 2. If n is undefined, throw a SyntaxError exception.
         if (!bigint.has_value())
@@ -834,7 +834,7 @@ static Optional<BigIntParseResult> parse_bigint_text(StringView text)
 static Optional<BigInt*> string_to_bigint(VM& vm, StringView string)
 {
     // 1. Let text be StringToCodePoints(str).
-    auto text = Utf8View(string).trim(whitespace_characters, AK::TrimMode::Both).as_string();
+    auto text = Utf8View(string).trim(whitespace_characters, AK::TrimMode::Both).as_deprecated_string();
 
     // 2. Let literal be ParseText(text, StringIntegerLiteral).
     auto result = parse_bigint_text(text);
@@ -2288,7 +2288,7 @@ ThrowCompletionOr<bool> is_loosely_equal(VM& vm, Value lhs, Value rhs)
     // 7. If Type(x) is BigInt and Type(y) is String, then
     if (lhs.is_bigint() && rhs.is_string()) {
         // a. Let n be StringToBigInt(y).
-        auto bigint = string_to_bigint(vm, rhs.as_string().deprecated_string());
+        auto bigint = string_to_bigint(vm, rhs.as_deprecated_string().deprecated_string());
 
         // b. If n is undefined, return false.
         if (!bigint.has_value())

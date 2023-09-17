@@ -1069,7 +1069,7 @@ static Optional<Object::IntrinsicAccessor> find_intrinsic_accessor(Object const*
     if (intrinsics == s_intrinsics.end())
         return {};
 
-    auto accessor_iterator = intrinsics->value.find(property_key.as_string());
+    auto accessor_iterator = intrinsics->value.find(property_key.as_deprecated_string());
     if (accessor_iterator == intrinsics->value.end())
         return {};
 
@@ -1132,7 +1132,7 @@ void Object::storage_set(PropertyKey const& property_key, ValueAndAttributes con
 
     if (m_has_intrinsic_accessors && property_key.is_string()) {
         if (auto intrinsics = s_intrinsics.find(this); intrinsics != s_intrinsics.end())
-            intrinsics->value.remove(property_key.as_string());
+            intrinsics->value.remove(property_key.as_deprecated_string());
     }
 
     auto property_key_string_or_symbol = property_key.to_string_or_symbol();
@@ -1174,7 +1174,7 @@ void Object::storage_delete(PropertyKey const& property_key)
 
     if (m_has_intrinsic_accessors && property_key.is_string()) {
         if (auto intrinsics = s_intrinsics.find(this); intrinsics != s_intrinsics.end())
-            intrinsics->value.remove(property_key.as_string());
+            intrinsics->value.remove(property_key.as_deprecated_string());
     }
 
     auto metadata = shape().lookup(property_key.to_string_or_symbol());
@@ -1233,7 +1233,7 @@ void Object::define_intrinsic_accessor(PropertyKey const& property_key, Property
 
     m_has_intrinsic_accessors = true;
     auto& intrinsics = s_intrinsics.ensure(this);
-    intrinsics.set(property_key.as_string(), move(accessor));
+    intrinsics.set(property_key.as_deprecated_string(), move(accessor));
 }
 
 void Object::ensure_shape_is_unique()
@@ -1335,7 +1335,7 @@ Optional<Completion> Object::enumerate_object_properties(Function<Optional<Compl
         for (auto& key : own_keys) {
             if (!key.is_string())
                 continue;
-            DeprecatedFlyString property_key = key.as_string().deprecated_string();
+            DeprecatedFlyString property_key = key.as_deprecated_string().deprecated_string();
             if (visited.contains(property_key))
                 continue;
             auto descriptor = TRY(target->internal_get_own_property(property_key));

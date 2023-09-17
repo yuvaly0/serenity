@@ -33,10 +33,10 @@ static ThrowCompletionOr<Optional<String>> get_string_option(VM& vm, Object cons
     if (option.is_undefined())
         return OptionalNone {};
 
-    if (validator && !validator(option.as_string().utf8_string_view()))
+    if (validator && !validator(option.as_deprecated_string().utf8_string_view()))
         return vm.throw_completion<RangeError>(ErrorType::OptionIsNotValidValue, option, property);
 
-    return option.as_string().utf8_string();
+    return option.as_deprecated_string().utf8_string();
 }
 
 // 14.1.2 ApplyOptionsToTag ( tag, options ), https://tc39.es/ecma402/#sec-apply-options-to-tag
@@ -218,7 +218,7 @@ static LocaleAndKeys apply_unicode_extension_to_tag(StringView tag, LocaleAndKey
 
 // 14.1 The Intl.Locale Constructor, https://tc39.es/ecma402/#sec-intl-locale-constructor
 LocaleConstructor::LocaleConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.Locale.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.Locale.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 

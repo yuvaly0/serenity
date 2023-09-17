@@ -140,7 +140,7 @@ static char const footer[] = R"~~~(
 
 static ErrorOr<String> escape_string(JsonValue to_escape)
 {
-    auto string = TRY(String::from_deprecated_string(to_escape.as_string()));
+    auto string = TRY(String::from_deprecated_string(to_escape.as_deprecated_string()));
 
     // All C++ simple escape sequences; see https://en.cppreference.com/w/cpp/language/escape
     // Other commonly-escaped characters are hard-to-type Unicode and therefore fine to include verbatim in UTF-8 coded strings.
@@ -180,7 +180,7 @@ static ErrorOr<Optional<String>> generate_enum_initializer_for(StringView proper
     if (!enum_type_name.has_value())
         return Optional<String> {};
 
-    return String::formatted("{}::{}", *enum_type_name, value.as_string());
+    return String::formatted("{}::{}", *enum_type_name, value.as_deprecated_string());
 }
 
 // FIXME: In case of error, propagate the precise array+property that triggered the error.

@@ -111,7 +111,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     icon_view->set_model(*model);
 
     icon_view->on_activation = [&](GUI::ModelIndex const& index) {
-        auto executable = model->data(index, GUI::ModelRole::Custom).as_string();
+        auto executable = model->data(index, GUI::ModelRole::Custom).as_deprecated_string();
         auto requires_root = model->data(index, static_cast<GUI::ModelRole>(SettingsAppsModelCustomRole::RequiresRoot)).as_bool();
 
         auto launch_origin_rect = icon_view->to_widget_rect(icon_view->content_rect(index)).translated(icon_view->screen_relative_rect().location());

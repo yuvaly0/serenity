@@ -254,7 +254,7 @@ bool property_accepts_@css_type_name@(PropertyID property_id, [[maybe_unused]] @
         VERIFY(value.is_object());
         if (auto maybe_valid_types = value.as_object().get_array("valid-types"sv); maybe_valid_types.has_value() && !maybe_valid_types->is_empty()) {
             for (auto valid_type : maybe_valid_types->values()) {
-                auto type_and_range = valid_type.as_string().split_view(' ');
+                auto type_and_range = valid_type.as_deprecated_string().split_view(' ');
                 if (type_and_range.first() != css_type_name)
                     continue;
 
@@ -567,7 +567,7 @@ bool property_has_quirk(PropertyID property_id, Quirk quirk)
                 for (auto& quirk : quirks.values()) {
                     VERIFY(quirk.is_string());
                     auto quirk_generator = property_generator.fork();
-                    quirk_generator.set("quirk:titlecase", title_casify(quirk.as_string()));
+                    quirk_generator.set("quirk:titlecase", title_casify(quirk.as_deprecated_string()));
                     quirk_generator.append(R"~~~(
         case Quirk::@quirk:titlecase@:
             return true;
@@ -608,7 +608,7 @@ bool property_accepts_type(PropertyID property_id, ValueType value_type)
             bool did_output_accepted_type = false;
             for (auto& type : valid_types.values()) {
                 VERIFY(type.is_string());
-                auto type_name = type.as_string().split_view(' ').first();
+                auto type_name = type.as_deprecated_string().split_view(' ').first();
                 if (type_name_is_enum(type_name))
                     continue;
 
@@ -686,7 +686,7 @@ bool property_accepts_identifier(PropertyID property_id, ValueID identifier)
             auto& valid_identifiers = maybe_valid_identifiers.value();
             for (auto& identifier : valid_identifiers.values()) {
                 auto identifier_generator = generator.fork();
-                identifier_generator.set("identifier:titlecase", title_casify(identifier.as_string()));
+                identifier_generator.set("identifier:titlecase", title_casify(identifier.as_deprecated_string()));
                 identifier_generator.appendln("        case ValueID::@identifier:titlecase@:");
             }
             property_generator.append(R"~~~(
@@ -700,7 +700,7 @@ bool property_accepts_identifier(PropertyID property_id, ValueID identifier)
         if (auto maybe_valid_types = object.get_array("valid-types"sv); maybe_valid_types.has_value() && !maybe_valid_types->is_empty()) {
             auto& valid_types = maybe_valid_types.value();
             for (auto& valid_type : valid_types.values()) {
-                auto type_name = valid_type.as_string().split_view(' ').first();
+                auto type_name = valid_type.as_deprecated_string().split_view(' ').first();
                 if (!type_name_is_enum(type_name))
                     continue;
 

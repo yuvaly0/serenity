@@ -320,11 +320,11 @@ static DecoderErrorOr<SegmentInformation> parse_information(Streamer& streamer)
             break;
         case MUXING_APP_ID:
             segment_information.set_muxing_app(TRY_READ(streamer.read_string()));
-            dbgln_if(MATROSKA_DEBUG, "Read MuxingApp attribute: {}", segment_information.muxing_app().as_string());
+            dbgln_if(MATROSKA_DEBUG, "Read MuxingApp attribute: {}", segment_information.muxing_app().as_deprecated_string());
             break;
         case WRITING_APP_ID:
             segment_information.set_writing_app(TRY_READ(streamer.read_string()));
-            dbgln_if(MATROSKA_DEBUG, "Read WritingApp attribute: {}", segment_information.writing_app().as_string());
+            dbgln_if(MATROSKA_DEBUG, "Read WritingApp attribute: {}", segment_information.writing_app().as_deprecated_string());
             break;
         case DURATION_ID:
             segment_information.set_duration_unscaled(TRY_READ(streamer.read_float()));

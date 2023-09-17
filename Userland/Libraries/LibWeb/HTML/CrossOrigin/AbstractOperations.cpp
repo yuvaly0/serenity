@@ -62,14 +62,14 @@ bool is_cross_origin_accessible_window_property_name(JS::PropertyKey const& prop
     static Array<DeprecatedFlyString, 13> property_names {
         "window"sv, "self"sv, "location"sv, "close"sv, "closed"sv, "focus"sv, "blur"sv, "frames"sv, "length"sv, "top"sv, "opener"sv, "parent"sv, "postMessage"sv
     };
-    return (property_key.is_string() && any_of(property_names, [&](auto const& name) { return property_key.as_string() == name; })) || property_key.is_number();
+    return (property_key.is_string() && any_of(property_names, [&](auto const& name) { return property_key.as_deprecated_string() == name; })) || property_key.is_number();
 }
 
 // 7.2.3.2 CrossOriginPropertyFallback ( P ), https://html.spec.whatwg.org/multipage/browsers.html#crossoriginpropertyfallback-(-p-)
 JS::ThrowCompletionOr<JS::PropertyDescriptor> cross_origin_property_fallback(JS::VM& vm, JS::PropertyKey const& property_key)
 {
     // 1. If P is "then", @@toStringTag, @@hasInstance, or @@isConcatSpreadable, then return PropertyDescriptor{ [[Value]]: undefined, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: true }.
-    auto property_key_is_then = property_key.is_string() && property_key.as_string() == vm.names.then.as_string();
+    auto property_key_is_then = property_key.is_string() && property_key.as_deprecated_string() == vm.names.then.as_deprecated_string();
     auto property_key_is_allowed_symbol = property_key.is_symbol()
         && (property_key.as_symbol() == vm.well_known_symbol_to_string_tag()
             || property_key.as_symbol() == vm.well_known_symbol_has_instance()
@@ -106,7 +106,7 @@ Optional<JS::PropertyDescriptor> cross_origin_get_own_property_helper(Variant<HT
     if (!property_key.is_string()) {
         return {};
     }
-    auto const& property_key_string = property_key.as_string();
+    auto const& property_key_string = property_key.as_deprecated_string();
 
     // 2. For each e of CrossOriginProperties(O):
     for (auto const& entry : cross_origin_properties(object_const_variant)) {
@@ -248,7 +248,7 @@ JS::MarkedVector<JS::Value> cross_origin_own_property_keys(Variant<HTML::Locatio
         keys.append(JS::PrimitiveString::create(vm, move(entry.property)));
 
     // 3. Return the concatenation of keys and « "then", @@toStringTag, @@hasInstance, @@isConcatSpreadable ».
-    keys.append(JS::PrimitiveString::create(vm, vm.names.then.as_string()));
+    keys.append(JS::PrimitiveString::create(vm, vm.names.then.as_deprecated_string()));
     keys.append(vm.well_known_symbol_to_string_tag());
     keys.append(vm.well_known_symbol_has_instance());
     keys.append(vm.well_known_symbol_is_concat_spreadable());

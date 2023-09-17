@@ -272,7 +272,7 @@ ThrowCompletionOr<Vector<String>> string_list_from_iterable(VM& vm, Value iterab
             }
 
             // iii. Append nextValue to the end of the List list.
-            list.append(next_value.as_string().utf8_string());
+            list.append(next_value.as_deprecated_string().utf8_string());
         }
     } while (next != nullptr);
 

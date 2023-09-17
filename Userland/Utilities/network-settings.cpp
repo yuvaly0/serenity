@@ -39,7 +39,7 @@ ErrorOr<int> serenity_main(Main::Arguments)
         adapter_data.as_object().for_each_member([&](const DeprecatedString& key, const JsonValue& value) {
             switch (value.type()) {
             case JsonValue::Type::String:
-                config_file->write_entry(adapter_name, key, value.as_string());
+                config_file->write_entry(adapter_name, key, value.as_deprecated_string());
                 break;
             case JsonValue::Type::Bool:
                 config_file->write_bool_entry(adapter_name, key, value.as_bool());

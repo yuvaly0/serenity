@@ -73,7 +73,7 @@ void FilteringProxyModel::filter()
             auto score = match_result.score;
             if (match_result.matched == TriState::Unknown) {
                 auto data = index.data();
-                if (data.is_string() && data.as_string().contains(m_filter_term)) {
+                if (data.is_string() && data.as_deprecated_string().contains(m_filter_term)) {
                     matches = true;
                     score = 0;
                 }

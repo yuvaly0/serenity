@@ -70,7 +70,7 @@ ThrowCompletionOr<void> Reference::put_value(VM& vm, Value value)
     if (m_environment_coordinate.has_value())
         return static_cast<DeclarativeEnvironment*>(m_base_environment)->set_mutable_binding_direct(vm, m_environment_coordinate->index, value, m_strict);
     else
-        return m_base_environment->set_mutable_binding(vm, m_name.as_string(), value, m_strict);
+        return m_base_environment->set_mutable_binding(vm, m_name.as_deprecated_string(), value, m_strict);
 }
 
 Completion Reference::throw_reference_error(VM& vm) const
@@ -114,7 +114,7 @@ ThrowCompletionOr<Value> Reference::get_value(VM& vm) const
         // OPTIMIZATION: For various primitives we can avoid actually creating a new object for them.
         GCPtr<Object> base_obj;
         if (m_base_value.is_string()) {
-            auto string_value = TRY(m_base_value.as_string().get(vm, m_name));
+            auto string_value = TRY(m_base_value.as_deprecated_string().get(vm, m_name));
             if (string_value.has_value())
                 return *string_value;
             base_obj = realm.intrinsics().string_prototype();
@@ -139,7 +139,7 @@ ThrowCompletionOr<Value> Reference::get_value(VM& vm) const
     // c. Return ? base.GetBindingValue(V.[[ReferencedName]], V.[[Strict]]) (see 9.1).
     if (m_environment_coordinate.has_value())
         return static_cast<DeclarativeEnvironment*>(m_base_environment)->get_binding_value_direct(vm, m_environment_coordinate->index, m_strict);
-    return m_base_environment->get_binding_value(vm, m_name.as_string(), m_strict);
+    return m_base_environment->get_binding_value(vm, m_name.as_deprecated_string(), m_strict);
 }
 
 // 13.5.1.2 Runtime Semantics: Evaluation, https://tc39.es/ecma262/#sec-delete-operator-runtime-semantics-evaluation
@@ -191,7 +191,7 @@ ThrowCompletionOr<bool> Reference::delete_(VM& vm)
     VERIFY(m_base_type == BaseType::Environment);
 
     //    c. Return ? base.DeleteBinding(ref.[[ReferencedName]]).
-    return m_base_environment->delete_binding(vm, m_name.as_string());
+    return m_base_environment->delete_binding(vm, m_name.as_deprecated_string());
 }
 
 // 6.2.4.8 InitializeReferencedBinding ( V, W ), https://tc39.es/ecma262/#sec-object.prototype.hasownproperty
@@ -200,7 +200,7 @@ ThrowCompletionOr<void> Reference::initialize_referenced_binding(VM& vm, Value v
 {
     VERIFY(!is_unresolvable());
     VERIFY(m_base_type == BaseType::Environment);
-    return m_base_environment->initialize_binding(vm, m_name.as_string(), value, hint);
+    return m_base_environment->initialize_binding(vm, m_name.as_deprecated_string(), value, hint);
 }
 
 // 6.2.4.9 MakePrivateReference ( baseValue, privateIdentifier ), https://tc39.es/ecma262/#sec-makeprivatereference

@@ -79,7 +79,7 @@ bool JsonValue::equals(JsonValue const& other) const
     if (is_bool() && other.is_bool() && as_bool() == other.as_bool())
         return true;
 
-    if (is_string() && other.is_string() && as_string() == other.as_string())
+    if (is_string() && other.is_string() && as_deprecated_string() == other.as_deprecated_string())
         return true;
 
 #if !defined(KERNEL)

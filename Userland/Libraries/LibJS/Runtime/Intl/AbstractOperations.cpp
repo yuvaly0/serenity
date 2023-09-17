@@ -577,7 +577,7 @@ ThrowCompletionOr<Array*> supported_locales(VM& vm, Vector<String> const& reques
     Vector<String> supported_locales;
 
     // 3. If matcher is "best fit", then
-    if (matcher.as_string().utf8_string_view() == "best fit"sv) {
+    if (matcher.as_deprecated_string().utf8_string_view() == "best fit"sv) {
         // a. Let supportedLocales be BestFitSupportedLocales(availableLocales, requestedLocales).
         supported_locales = best_fit_supported_locales(requested_locales);
     }
@@ -632,7 +632,7 @@ ThrowCompletionOr<StringOrBoolean> get_boolean_or_string_number_format_option(VM
     // 6. If stringValues does not contain value, throw a RangeError exception.
     auto it = find(string_values.begin(), string_values.end(), value_string.bytes_as_string_view());
     if (it == string_values.end())
-        return vm.throw_completion<RangeError>(ErrorType::OptionIsNotValidValue, value_string, property.as_string());
+        return vm.throw_completion<RangeError>(ErrorType::OptionIsNotValidValue, value_string, property.as_deprecated_string());
 
     // 7. Return value.
     return StringOrBoolean { *it };

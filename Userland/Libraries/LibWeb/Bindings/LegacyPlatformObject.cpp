@@ -220,7 +220,7 @@ JS::ThrowCompletionOr<bool> LegacyPlatformObject::internal_set(JS::PropertyKey c
         // 2. If O implements an interface with a named property setter and Type(P) is String, then:
         if (has_named_property_setter() && property_name.is_string()) {
             // 1. Invoke the named property setter on O with P and V.
-            TRY(throw_dom_exception_if_needed(vm, [&] { return invoke_named_property_setter(property_name.as_string(), value); }));
+            TRY(throw_dom_exception_if_needed(vm, [&] { return invoke_named_property_setter(property_name.as_deprecated_string(), value); }));
 
             // 2. Return true.
             return true;
@@ -261,7 +261,7 @@ JS::ThrowCompletionOr<bool> LegacyPlatformObject::internal_define_own_property(J
     // 2. If O supports named properties, O does not implement an interface with the [Global] extended attribute, Type(P) is String, and P is not an unforgeable property name of O, then:
     // FIXME: Check if P is not an unforgeable property name of O
     if (supports_named_properties() && !has_global_interface_extended_attribute() && property_name.is_string()) {
-        auto const& property_name_as_string = property_name.as_string();
+        auto const& property_name_as_string = property_name.as_deprecated_string();
 
         // 1. Let creating be true if P is not a supported property name, and false otherwise.
         // NOTE: This is in it's own variable to enforce the type.

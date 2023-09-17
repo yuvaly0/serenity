@@ -12,7 +12,7 @@
 namespace JS {
 
 ErrorConstructor::ErrorConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.Error.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.Error.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 

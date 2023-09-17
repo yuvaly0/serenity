@@ -34,7 +34,7 @@ static Value property_key_to_value(VM& vm, PropertyKey const& property_key)
         return property_key.as_symbol();
 
     if (property_key.is_string())
-        return PrimitiveString::create(vm, property_key.as_string());
+        return PrimitiveString::create(vm, property_key.as_deprecated_string());
 
     VERIFY(property_key.is_number());
     return PrimitiveString::create(vm, DeprecatedString::number(property_key.as_number()));

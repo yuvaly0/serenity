@@ -77,7 +77,7 @@ public:
         auto data = index.data();
         DeprecatedString text;
         if (data.is_string())
-            text = data.as_string();
+            text = data.as_deprecated_string();
         Gfx::StylePainter::paint_progressbar(painter, rect, palette, 0, 100, percentage, text);
         painter.draw_rect(rect, Color::Black);
     }

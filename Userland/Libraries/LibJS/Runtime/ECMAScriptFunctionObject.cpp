@@ -413,7 +413,7 @@ ThrowCompletionOr<void> ECMAScriptFunctionObject::function_declaration_instantia
         arguments_object_needed = false;
     }
     // 17. Else if parameterNames contains "arguments", then
-    else if (parameter_names.contains(vm.names.arguments.as_string())) {
+    else if (parameter_names.contains(vm.names.arguments.as_deprecated_string())) {
         // a. Set argumentsObjectNeeded to false.
         arguments_object_needed = false;
     }
@@ -429,7 +429,7 @@ ThrowCompletionOr<void> ECMAScriptFunctionObject::function_declaration_instantia
                 functions_to_initialize.append(function);
         }));
 
-        auto const& arguments_name = vm.names.arguments.as_string();
+        auto const& arguments_name = vm.names.arguments.as_deprecated_string();
 
         if (!has_parameter_expressions && function_names.contains(arguments_name))
             arguments_object_needed = false;
@@ -510,21 +510,21 @@ ThrowCompletionOr<void> ECMAScriptFunctionObject::function_declaration_instantia
         // c. If strict is true, then
         if (strict) {
             // i. Perform ! env.CreateImmutableBinding("arguments", false).
-            MUST(environment->create_immutable_binding(vm, vm.names.arguments.as_string(), false));
+            MUST(environment->create_immutable_binding(vm, vm.names.arguments.as_deprecated_string(), false));
 
             // ii. NOTE: In strict mode code early errors prevent attempting to assign to this binding, so its mutability is not observable.
         }
         // b. Else,
         else {
             // i. Perform ! env.CreateMutableBinding("arguments", false).
-            MUST(environment->create_mutable_binding(vm, vm.names.arguments.as_string(), false));
+            MUST(environment->create_mutable_binding(vm, vm.names.arguments.as_deprecated_string(), false));
         }
 
         // c. Perform ! env.InitializeBinding("arguments", ao).
-        MUST(environment->initialize_binding(vm, vm.names.arguments.as_string(), arguments_object, Environment::InitializeBindingHint::Normal));
+        MUST(environment->initialize_binding(vm, vm.names.arguments.as_deprecated_string(), arguments_object, Environment::InitializeBindingHint::Normal));
 
         // f. Let parameterBindings be the list-concatenation of parameterNames and « "arguments" ».
-        parameter_names.set(vm.names.arguments.as_string());
+        parameter_names.set(vm.names.arguments.as_deprecated_string());
     }
     // 23. Else,
     else {
@@ -688,7 +688,7 @@ ThrowCompletionOr<void> ECMAScriptFunctionObject::function_declaration_instantia
             if (parameter_names.contains(function_name))
                 return;
             // The spec says 'initializedBindings' here but that does not exist and it then adds it to 'instantiatedVarNames' so it probably means 'instantiatedVarNames'.
-            if (!instantiated_var_names.contains(function_name) && function_name != vm.names.arguments.as_string()) {
+            if (!instantiated_var_names.contains(function_name) && function_name != vm.names.arguments.as_deprecated_string()) {
                 MUST(var_environment->create_mutable_binding(vm, function_name, false));
                 MUST(var_environment->initialize_binding(vm, function_name, js_undefined(), Environment::InitializeBindingHint::Normal));
                 instantiated_var_names.set(function_name);

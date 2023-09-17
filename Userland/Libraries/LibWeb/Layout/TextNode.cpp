@@ -453,7 +453,7 @@ Optional<TextNode::Chunk> TextNode::ChunkIterator::try_commit_chunk(Utf8View::It
             .start = byte_offset,
             .length = byte_length,
             .has_breaking_newline = has_breaking_newline,
-            .is_all_whitespace = is_all_whitespace(chunk_view.as_string()),
+            .is_all_whitespace = is_all_whitespace(chunk_view.as_deprecated_string()),
         };
     }
 

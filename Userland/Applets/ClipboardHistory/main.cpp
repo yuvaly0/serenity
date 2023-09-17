@@ -75,7 +75,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
 
     auto debug_dump_action = GUI::Action::create("Dump to Debug Console", [&](const GUI::Action&) {
         table_view->selection().for_each_index([&](GUI::ModelIndex& index) {
-            dbgln("{}", model->data(index, GUI::ModelRole::Display).as_string());
+            dbgln("{}", model->data(index, GUI::ModelRole::Display).as_deprecated_string());
         });
     });
 

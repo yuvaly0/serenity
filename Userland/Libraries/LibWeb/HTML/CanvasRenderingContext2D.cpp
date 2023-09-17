@@ -512,7 +512,7 @@ CanvasRenderingContext2D::PreparedText CanvasRenderingContext2D::prepare_text(De
             return IterationDecision::Continue;
 
         auto glyph_view = replaced_text_view.substring_view(previous_grapheme_boundary, boundary - previous_grapheme_boundary);
-        auto glyph = String::from_utf8(glyph_view.as_string()).release_value_but_fixme_should_propagate_errors();
+        auto glyph = String::from_utf8(glyph_view.as_deprecated_string()).release_value_but_fixme_should_propagate_errors();
 
         prepared_text.glyphs.append({ move(glyph), { static_cast<int>(boundary), 0 } });
         return IterationDecision::Continue;

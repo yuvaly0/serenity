@@ -223,7 +223,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     // FIXME: Make this constexpr once String is able to.
     auto const format_sample_count = [&profile](auto const sample_count) {
         if (profile->show_percentages())
-            return DeprecatedString::formatted("{}%", sample_count.as_string());
+            return DeprecatedString::formatted("{}%", sample_count.as_deprecated_string());
         return DeprecatedString::formatted("{} Samples", sample_count.to_i32());
     };
 

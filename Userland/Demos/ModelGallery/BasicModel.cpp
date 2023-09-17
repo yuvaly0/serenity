@@ -25,7 +25,7 @@ GUI::Model::MatchResult BasicModel::data_matches(GUI::ModelIndex const& index, G
 
     auto& value = m_items.at(index.row());
 
-    if (value.contains(data.as_string()))
+    if (value.contains(data.as_deprecated_string()))
         return { TriState::True };
 
     return { TriState::False };

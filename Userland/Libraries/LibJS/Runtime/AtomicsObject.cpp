@@ -31,7 +31,7 @@ static ThrowCompletionOr<ArrayBuffer*> validate_integer_typed_array(VM& vm, Type
     // 4. If waitable is true, then
     if (waitable) {
         // a. If typedArray.[[TypedArrayName]] is not "Int32Array" or "BigInt64Array", throw a TypeError exception.
-        if ((type_name != vm.names.Int32Array.as_string()) && (type_name != vm.names.BigInt64Array.as_string()))
+        if ((type_name != vm.names.Int32Array.as_deprecated_string()) && (type_name != vm.names.BigInt64Array.as_deprecated_string()))
             return vm.throw_completion<TypeError>(ErrorType::TypedArrayTypeIsNot, type_name, "Int32 or BigInt64"sv);
     }
     // 5. Else,

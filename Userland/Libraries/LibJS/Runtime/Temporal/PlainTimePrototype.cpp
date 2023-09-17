@@ -387,7 +387,7 @@ JS_DEFINE_NATIVE_FUNCTION(PlainTimePrototype::to_zoned_date_time)
     // 5. If temporalDateLike is undefined, then
     if (temporal_date_like.is_undefined()) {
         // a. Throw a TypeError exception.
-        return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.plainDate.as_string());
+        return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.plainDate.as_deprecated_string());
     }
 
     // 6. Let temporalDate be ? ToTemporalDate(temporalDateLike).
@@ -399,7 +399,7 @@ JS_DEFINE_NATIVE_FUNCTION(PlainTimePrototype::to_zoned_date_time)
     // 8. If temporalTimeZoneLike is undefined, then
     if (temporal_time_zone_like.is_undefined()) {
         // a. Throw a TypeError exception.
-        return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.timeZone.as_string());
+        return vm.throw_completion<TypeError>(ErrorType::MissingRequiredProperty, vm.names.timeZone.as_deprecated_string());
     }
 
     // 9. Let timeZone be ? ToTemporalTimeZone(temporalTimeZoneLike).

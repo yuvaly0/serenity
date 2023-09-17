@@ -139,7 +139,7 @@ ThrowCompletionOr<Optional<Value>> PrimitiveString::get(VM& vm, PropertyKey cons
     if (property_key.is_symbol())
         return Optional<Value> {};
     if (property_key.is_string()) {
-        if (property_key.as_string() == vm.names.length.as_string()) {
+        if (property_key.as_deprecated_string() == vm.names.length.as_deprecated_string()) {
             auto length = utf16_string().length_in_code_units();
             return Value(static_cast<double>(length));
         }

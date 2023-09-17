@@ -137,7 +137,7 @@ ErrorOr<HashMap<Name, Vector<Answer>, Name::Traits>> LookupServer::try_load_etc_
         StringBuilder builder;
         TRY(builder.try_append(maybe_address->to_deprecated_string_reversed()));
         TRY(builder.try_append(".in-addr.arpa"sv));
-        TRY(add_answer(builder.to_deprecated_string(), RecordType::PTR, name.as_string()));
+        TRY(add_answer(builder.to_deprecated_string(), RecordType::PTR, name.as_deprecated_string()));
     }
 
     return map;
@@ -152,7 +152,7 @@ static DeprecatedString get_hostname()
 
 ErrorOr<Vector<Answer>> LookupServer::lookup(Name const& name, RecordType record_type)
 {
-    dbgln_if(LOOKUPSERVER_DEBUG, "Got request for '{}'", name.as_string());
+    dbgln_if(LOOKUPSERVER_DEBUG, "Got request for '{}'", name.as_deprecated_string());
 
     Vector<Answer> answers;
     auto add_answer = [&](Answer const& answer) {
@@ -192,7 +192,7 @@ ErrorOr<Vector<Answer>> LookupServer::lookup(Name const& name, RecordType record
         for (auto& answer : cached_answers->value) {
             // TODO: Actually remove expired answers from the cache.
             if (answer.type() == record_type && !answer.has_expired()) {
-                dbgln_if(LOOKUPSERVER_DEBUG, "Cache hit: {} -> {}", name.as_string(), answer.record_data());
+                dbgln_if(LOOKUPSERVER_DEBUG, "Cache hit: {} -> {}", name.as_deprecated_string(), answer.record_data());
                 add_answer(answer);
             }
         }
@@ -201,7 +201,7 @@ ErrorOr<Vector<Answer>> LookupServer::lookup(Name const& name, RecordType record
     }
 
     // Fourth, look up .local names using mDNS instead of DNS nameservers.
-    if (name.as_string().ends_with(".local"sv)) {
+    if (name.as_deprecated_string().ends_with(".local"sv)) {
         answers = TRY(m_mdns->lookup(name, record_type));
         for (auto& answer : answers)
             put_in_cache(answer);
@@ -299,11 +299,11 @@ ErrorOr<Vector<Answer>> LookupServer::lookup(Name const& name, DeprecatedString 
         auto& response_question = response.questions()[i];
         bool match = request_question.class_code() == response_question.class_code()
             && request_question.record_type() == response_question.record_type()
-            && request_question.name().as_string().equals_ignoring_ascii_case(response_question.name().as_string());
+            && request_question.name().as_deprecated_string().equals_ignoring_ascii_case(response_question.name().as_deprecated_string());
         if (!match) {
             dbgln("Request and response questions do not match");
-            dbgln("   Request: name=_{}_, type={}, class={}", request_question.name().as_string(), response_question.record_type(), response_question.class_code());
-            dbgln("  Response: name=_{}_, type={}, class={}", response_question.name().as_string(), response_question.record_type(), response_question.class_code());
+            dbgln("   Request: name=_{}_, type={}, class={}", request_question.name().as_deprecated_string(), response_question.record_type(), response_question.class_code());
+            dbgln("  Response: name=_{}_, type={}, class={}", response_question.name().as_deprecated_string(), response_question.record_type(), response_question.class_code());
             return Vector<Answer> {};
         }
     }

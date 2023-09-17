@@ -101,9 +101,9 @@ SheetGlobalObject::SheetGlobalObject(JS::Realm& realm, Sheet& sheet)
 JS::ThrowCompletionOr<bool> SheetGlobalObject::internal_has_property(JS::PropertyKey const& name) const
 {
     if (name.is_string()) {
-        if (name.as_string() == "value")
+        if (name.as_deprecated_string() == "value")
             return true;
-        if (m_sheet.parse_cell_name(name.as_string()).has_value())
+        if (m_sheet.parse_cell_name(name.as_deprecated_string()).has_value())
             return true;
     }
     return Object::internal_has_property(name);
@@ -112,13 +112,13 @@ JS::ThrowCompletionOr<bool> SheetGlobalObject::internal_has_property(JS::Propert
 JS::ThrowCompletionOr<JS::Value> SheetGlobalObject::internal_get(const JS::PropertyKey& property_name, JS::Value receiver, JS::CacheablePropertyMetadata*) const
 {
     if (property_name.is_string()) {
-        if (property_name.as_string() == "value") {
+        if (property_name.as_deprecated_string() == "value") {
             if (auto cell = m_sheet.current_evaluated_cell())
                 return cell->js_data();
 
             return JS::js_undefined();
         }
-        if (auto pos = m_sheet.parse_cell_name(property_name.as_string()); pos.has_value()) {
+        if (auto pos = m_sheet.parse_cell_name(property_name.as_deprecated_string()); pos.has_value()) {
             auto& cell = m_sheet.ensure(pos.value());
             cell.reference_from(m_sheet.current_evaluated_cell());
             return cell.typed_js_data();
@@ -131,7 +131,7 @@ JS::ThrowCompletionOr<JS::Value> SheetGlobalObject::internal_get(const JS::Prope
 JS::ThrowCompletionOr<bool> SheetGlobalObject::internal_set(const JS::PropertyKey& property_name, JS::Value value, JS::Value receiver)
 {
     if (property_name.is_string()) {
-        if (auto pos = m_sheet.parse_cell_name(property_name.as_string()); pos.has_value()) {
+        if (auto pos = m_sheet.parse_cell_name(property_name.as_deprecated_string()); pos.has_value()) {
             auto& cell = m_sheet.ensure(pos.value());
             if (auto current = m_sheet.current_evaluated_cell())
                 current->reference_from(&cell);
@@ -406,7 +406,7 @@ JS_DEFINE_NATIVE_FUNCTION(WorkbookObject::sheet)
     auto& workbook = workbook_object.m_workbook;
 
     if (name_value.is_string()) {
-        auto name = name_value.as_string().deprecated_string();
+        auto name = name_value.as_deprecated_string().deprecated_string();
         for (auto& sheet : workbook.sheets()) {
             if (sheet->name() == name)
                 return JS::Value(&sheet->global_object());

@@ -95,7 +95,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     icon_view->set_model(*model);
 
     icon_view->on_activation = [&](GUI::ModelIndex const& index) {
-        auto executable = model->data(index, GUI::ModelRole::Custom).as_string();
+        auto executable = model->data(index, GUI::ModelRole::Custom).as_deprecated_string();
         GUI::Process::spawn_or_show_error(window, executable);
     };
 

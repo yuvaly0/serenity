@@ -20,7 +20,7 @@ void AsyncFunctionPrototype::initialize(Realm& realm)
     Base::initialize(realm);
 
     // 27.7.3.2 AsyncFunction.prototype [ @@toStringTag ], https://tc39.es/ecma262/#sec-async-function-prototype-properties-toStringTag
-    define_direct_property(vm.well_known_symbol_to_string_tag(), PrimitiveString::create(vm, vm.names.AsyncFunction.as_string()), Attribute::Configurable);
+    define_direct_property(vm.well_known_symbol_to_string_tag(), PrimitiveString::create(vm, vm.names.AsyncFunction.as_deprecated_string()), Attribute::Configurable);
 }
 
 }

@@ -1666,7 +1666,7 @@ ThrowCompletionOr<MathematicalValue> to_intl_mathematical_value(VM& vm, Value va
 
     // 3. If Type(primValue) is String,
     // a.     Let str be primValue.
-    auto string = primitive_value.as_string().utf8_string();
+    auto string = primitive_value.as_deprecated_string().utf8_string();
 
     // Step 4 handled separately by the FIXME above.
 

@@ -158,7 +158,7 @@ Vector<GUI::ModelIndex> ProfileModel::matches(StringView searching, unsigned fla
     Vector<GUI::ModelIndex> found_indices;
     for (auto it = nodes->begin(); !it.is_end(); ++it) {
         GUI::ModelIndex index = this->index(it.index(), StackFrame, parent);
-        if (!string_matches(data(index, GUI::ModelRole::Display).as_string(), searching, flags))
+        if (!string_matches(data(index, GUI::ModelRole::Display).as_deprecated_string(), searching, flags))
             continue;
 
         found_indices.append(index);

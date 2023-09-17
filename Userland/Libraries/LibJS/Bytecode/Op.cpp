@@ -386,7 +386,7 @@ ThrowCompletionOr<void> ConcatString::execute_impl(Bytecode::Interpreter& interp
 {
     auto& vm = interpreter.vm();
     auto string = TRY(interpreter.accumulator().to_primitive_string(vm));
-    interpreter.reg(m_lhs) = PrimitiveString::create(vm, interpreter.reg(m_lhs).as_string(), string);
+    interpreter.reg(m_lhs) = PrimitiveString::create(vm, interpreter.reg(m_lhs).as_deprecated_string(), string);
     return {};
 }
 
@@ -638,7 +638,7 @@ static ThrowCompletionOr<void> get_by_id(Bytecode::Interpreter& interpreter, Ide
     auto& cache = interpreter.current_executable().property_lookup_caches[cache_index];
 
     if (base_value.is_string()) {
-        auto string_value = TRY(base_value.as_string().get(vm, name));
+        auto string_value = TRY(base_value.as_deprecated_string().get(vm, name));
         if (string_value.has_value()) {
             interpreter.accumulator() = *string_value;
             return {};
@@ -1148,7 +1148,7 @@ ThrowCompletionOr<void> GetByValue::execute_impl(Bytecode::Interpreter& interpre
     auto property_key = TRY(property_key_value.to_property_key(vm));
 
     if (base_value.is_string()) {
-        auto string_value = TRY(base_value.as_string().get(vm, property_key));
+        auto string_value = TRY(base_value.as_deprecated_string().get(vm, property_key));
         if (string_value.has_value()) {
             interpreter.accumulator() = *string_value;
             return {};
@@ -1325,7 +1325,7 @@ ThrowCompletionOr<void> GetObjectPropertyIterator::execute_impl(Bytecode::Interp
                     if (key.is_number())
                         result_object->define_direct_property(vm.names.value, PrimitiveString::create(vm, TRY_OR_THROW_OOM(vm, String::number(key.as_number()))), default_attributes);
                     else if (key.is_string())
-                        result_object->define_direct_property(vm.names.value, PrimitiveString::create(vm, key.as_string()), default_attributes);
+                        result_object->define_direct_property(vm.names.value, PrimitiveString::create(vm, key.as_deprecated_string()), default_attributes);
                     else
                         VERIFY_NOT_REACHED(); // We should not have non-string/number keys.
 

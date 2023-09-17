@@ -135,7 +135,7 @@ namespace JS {
 
 static void initialize_constructor(VM& vm, PropertyKey const& property_key, Object& constructor, Object* prototype, PropertyAttributes constructor_property_attributes = Attribute::Writable | Attribute::Configurable)
 {
-    constructor.define_direct_property(vm.names.name, PrimitiveString::create(vm, property_key.as_string()), Attribute::Configurable);
+    constructor.define_direct_property(vm.names.name, PrimitiveString::create(vm, property_key.as_deprecated_string()), Attribute::Configurable);
     if (prototype)
         prototype->define_direct_property(vm.names.constructor, &constructor, constructor_property_attributes);
 }

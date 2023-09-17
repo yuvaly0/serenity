@@ -230,7 +230,7 @@ static ThrowCompletionOr<NonnullGCPtr<PrimitiveString>> this_string_value(VM& vm
 {
     // 1. If value is a String, return value.
     if (value.is_string())
-        return value.as_string();
+        return value.as_deprecated_string();
 
     // 2. If value is an Object and value has a [[StringData]] internal slot, then
     if (value.is_object() && is<StringObject>(value.as_object())) {
@@ -1422,7 +1422,7 @@ ThrowCompletionOr<String> trim_string(VM& vm, Value input_value, TrimMode where)
     // 5. Else,
     // a. Assert: where is start+end.
     // b. Let T be the String value that is a copy of S with both leading and trailing white space removed.
-    auto trimmed_string = Utf8View(string).trim(whitespace_characters, where).as_string();
+    auto trimmed_string = Utf8View(string).trim(whitespace_characters, where).as_deprecated_string();
 
     // 6. Return T.
     return MUST(String::from_utf8(trimmed_string));

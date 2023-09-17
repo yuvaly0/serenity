@@ -229,7 +229,7 @@ Vector<DeprecatedString> HackStudioWidget::read_recent_projects()
     for (auto& json_value : value.as_array().values()) {
         if (!json_value.is_string())
             return {};
-        paths.append(json_value.as_string());
+        paths.append(json_value.as_deprecated_string());
     }
 
     return paths;
@@ -288,12 +288,12 @@ Vector<DeprecatedString> HackStudioWidget::selected_file_paths() const
 {
     Vector<DeprecatedString> files;
     m_project_tree_view->selection().for_each_index([&](const GUI::ModelIndex& index) {
-        DeprecatedString sub_path = index.data().as_string();
+        DeprecatedString sub_path = index.data().as_deprecated_string();
 
         GUI::ModelIndex parent_or_invalid = index.parent();
 
         while (parent_or_invalid.is_valid()) {
-            sub_path = DeprecatedString::formatted("{}/{}", parent_or_invalid.data().as_string(), sub_path);
+            sub_path = DeprecatedString::formatted("{}/{}", parent_or_invalid.data().as_deprecated_string(), sub_path);
 
             parent_or_invalid = parent_or_invalid.parent();
         }

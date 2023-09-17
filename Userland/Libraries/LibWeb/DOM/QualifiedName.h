@@ -19,7 +19,7 @@ public:
     DeprecatedFlyString const& prefix() const { return m_impl->prefix; }
     DeprecatedFlyString const& namespace_() const { return m_impl->namespace_; }
 
-    DeprecatedFlyString const& as_string() const { return m_impl->as_string; }
+    DeprecatedFlyString const& as_string() const { return m_impl->as_deprecated_string; }
 
     struct Impl : public RefCounted<Impl> {
         Impl(DeprecatedFlyString const& local_name, DeprecatedFlyString const& prefix, DeprecatedFlyString const& namespace_);

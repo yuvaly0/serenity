@@ -161,7 +161,7 @@ EasingFunctionMetadata easing_function_metadata(EasingFunction easing_function)
             bool first = true;
             // parameters: [ "<foo>", "<foo [0, 1]>" ]
             parameters.value().for_each([&](JsonValue const& value) {
-                GenericLexer lexer { value.as_string() };
+                GenericLexer lexer { value.as_deprecated_string() };
                 VERIFY(lexer.consume_specific('<'));
                 auto parameter_type_name = lexer.consume_until([](char ch) { return ch == ' ' || ch == '>'; });
                 auto has_bounds = false;

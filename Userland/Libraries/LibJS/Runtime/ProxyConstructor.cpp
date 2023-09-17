@@ -39,7 +39,7 @@ static ThrowCompletionOr<ProxyObject*> proxy_create(VM& vm, Value target, Value 
 }
 
 ProxyConstructor::ProxyConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.Proxy.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.Proxy.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 

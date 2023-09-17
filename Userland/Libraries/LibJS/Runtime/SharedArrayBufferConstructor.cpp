@@ -15,7 +15,7 @@
 namespace JS {
 
 SharedArrayBufferConstructor::SharedArrayBufferConstructor(Realm& realm)
-    : NativeFunction(realm.vm().names.SharedArrayBuffer.as_string(), realm.intrinsics().function_prototype())
+    : NativeFunction(realm.vm().names.SharedArrayBuffer.as_deprecated_string(), realm.intrinsics().function_prototype())
 {
 }
 

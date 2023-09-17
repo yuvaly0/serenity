@@ -71,7 +71,7 @@ class @name@ :
             VERIFY(value.is_string());
 
             class_definition_generator.append(first ? " "sv : ", "sv);
-            class_definition_generator.append(MUST(String::formatted("public {}", value.as_string())));
+            class_definition_generator.append(MUST(String::formatted("public {}", value.as_deprecated_string())));
             first = false;
         });
 
@@ -118,7 +118,7 @@ String generate_hash_table_population(JsonArray const& values, StringView hash_t
     StringBuilder builder;
     values.for_each([&](auto& value) {
         VERIFY(value.is_string());
-        builder.appendff("        {}.set({}::{});\n", hash_table_name, enum_class, value.as_string());
+        builder.appendff("        {}.set({}::{});\n", hash_table_name, enum_class, value.as_deprecated_string());
     });
 
     return MUST(builder.to_string());
@@ -266,7 +266,7 @@ JsonArray translate_aria_names_to_enum(JsonArray const& names)
     JsonArray translated_names;
     names.for_each([&](JsonValue const& value) {
         VERIFY(value.is_string());
-        auto name = value.as_string();
+        auto name = value.as_deprecated_string();
         MUST(translated_names.append(aria_name_to_enum_name(name)));
     });
     return translated_names;
@@ -317,7 +317,7 @@ namespace Web::ARIA {
         member_generator.set("children_are_presentational", children_are_presentational ? "true"sv : "false"sv);
 
         JsonArray const& super_classes = value.as_object().get_array("superClassRoles"sv).value();
-        member_generator.set("parent", super_classes.at(0).as_string());
+        member_generator.set("parent", super_classes.at(0).as_deprecated_string());
 
         member_generator.append(R"~~~(
 @name@::@name@() { }
@@ -356,7 +356,7 @@ DefaultValueType @name@::default_value_for_property_or_state(StateAndProperties 
                 auto case_generator = member_generator.fork();
                 VERIFY(value.is_string());
                 case_generator.set("state_or_property"sv, aria_name_to_enum_name(name));
-                case_generator.set("implicit_value"sv, value.as_string());
+                case_generator.set("implicit_value"sv, value.as_deprecated_string());
                 case_generator.append(R"~~~(
     case StateAndProperties::@state_or_property@:
         return @implicit_value@;
@@ -372,7 +372,7 @@ DefaultValueType @name@::default_value_for_property_or_state(StateAndProperties 
 
         JsonValue const& name_from_source = value.as_object().get("nameFromSource"sv).value();
         if (!name_from_source.is_null()) {
-            member_generator.set("name_from_source"sv, name_from_source.as_string());
+            member_generator.set("name_from_source"sv, name_from_source.as_deprecated_string());
             member_generator.append(R"~~~(
 NameFromSource @name@::name_from_source() const
 {

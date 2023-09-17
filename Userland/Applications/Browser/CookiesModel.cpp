@@ -90,7 +90,7 @@ GUI::Variant CookiesModel::data(GUI::ModelIndex const& index, GUI::ModelRole rol
 
 GUI::Model::MatchResult CookiesModel::data_matches(GUI::ModelIndex const& index, GUI::Variant const& term) const
 {
-    auto needle = term.as_string();
+    auto needle = term.as_deprecated_string();
     if (needle.is_empty())
         return { TriState::True };
 
