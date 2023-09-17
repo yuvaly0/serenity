@@ -52,7 +52,7 @@ DeprecatedString encode_hex(const ReadonlyBytes input)
     for (auto ch : input)
         output.appendff("{:02x}", ch);
 
-    return output.to_deprecated_string();
+    return output.to_string();
 }
 #endif
 

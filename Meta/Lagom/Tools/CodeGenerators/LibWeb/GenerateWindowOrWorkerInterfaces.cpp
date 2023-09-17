@@ -52,7 +52,7 @@ static Optional<LegacyConstructor> const& lookup_legacy_constructor(IDL::Interfa
     consume_whitespace(function_lexer);
 
     auto name = function_lexer.consume_until([](auto ch) { return is_ascii_space(ch) || ch == '('; });
-    auto constructor_class = DeprecatedString::formatted("{}Constructor", name);
+    auto constructor_class = String::formatted("{}Constructor", name);
 
     s_legacy_constructors.set(interface.name, LegacyConstructor { name, move(constructor_class) });
     return s_legacy_constructors.get(interface.name).value();
